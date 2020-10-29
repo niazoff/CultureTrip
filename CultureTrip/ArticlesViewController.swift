@@ -12,15 +12,17 @@ class ArticlesViewController: UIViewController {
   private typealias CollectionViewDataSource = UICollectionViewDiffableDataSource<Section, Article>
   
   private let session = URLSession.shared
+  private let imageDataCache = DictionaryImageDataCache()
   private let articlesURL = URL(string: "https://cdn.theculturetrip.com/home-assignment/response.json")!
   private let articlesDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
   
   private lazy var collectionViewDataSource: CollectionViewDataSource = .init(collectionView: collectionView) {
-    collectionView, indexPath, article in
+    [imageDataCache] collectionView, indexPath, article in
     guard let articleCell = collectionView.dequeueReusableCell(
             withReuseIdentifier: CellIdentifier.articleCell.rawValue,
             for: indexPath) as? ArticleCollectionViewCell
     else { return nil }
+    articleCell.imageDataCache = imageDataCache
     articleCell.article = article
     return articleCell
   }
@@ -74,5 +76,20 @@ class ArticlesViewController: UIViewController {
     snapshot.appendSections(Section.allCases)
     snapshot.appendItems(articles, toSection: .articles)
     collectionViewDataSource.apply(snapshot)
+  }
+}
+
+protocol ImageDataCache: AnyObject {
+  func data(for url: URL) -> Data?
+  func set(_ data: Data?, for url: URL)
+}
+
+private final class DictionaryImageDataCache: ImageDataCache {
+  private var cache = [URL: Data]()
+  
+  func data(for url: URL) -> Data? { cache[url] }
+  
+  func set(_ data: Data?, for url: URL) {
+    cache[url] = data
   }
 }

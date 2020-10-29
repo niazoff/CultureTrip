@@ -14,6 +14,7 @@ class ArticleCollectionViewCell: UICollectionViewCell {
   var article: Article? {
     didSet { setUp() }
   }
+  var imageDataCache: ImageDataCache?
   
   @IBOutlet weak var titleLabel: UILabel! {
     didSet { titleLabel.text = article?.title }
@@ -68,12 +69,13 @@ class ArticleCollectionViewCell: UICollectionViewCell {
     didSet { authorImageView?.image = authorImage }
   }
   
-  private var articleImageCancellable: AnyCancellable?
-  private var authorImageCancellable: AnyCancellable?
+  private var cancellables = Set<AnyCancellable>()
   
   override func prepareForReuse() {
+    cancellables.removeAll()
     article = nil
-    articleImageView.image = nil
+    articleImage = nil
+    setArticleImage()
     authorImage = nil
   }
   
@@ -85,22 +87,41 @@ class ArticleCollectionViewCell: UICollectionViewCell {
     likesCountLabel?.text = (article?.likesCount).map(String.init)
     isSavedImageView?.image = (article?.isSaved).flatMap { UIImage(named: $0 ? "saved" : "save") }
     isLikedImageView?.image = (article?.isLiked).flatMap { UIImage(named: $0 ? "liked" : "like") }
-    articleImageCancellable = (article?.imageUrl).map(session.dataTaskPublisher)?.map(\.data)
-      .receive(on: DispatchQueue.main)
-      .map(UIImage.init).replaceError(with: nil).sink { [weak self] in
-        self?.articleImage = $0
-        self?.setArticleImage(animated: true)
+    if let url = article?.imageUrl {
+      if let data = imageDataCache?.data(for: url) {
+        articleImage = UIImage(data: data)
+        setArticleImage()
+      } else {
+        session.dataTaskPublisher(for: url)
+          .map(\.data).map(Optional.some)
+          .receive(on: DispatchQueue.main)
+          .replaceError(with: nil).sink { [weak self] in
+            self?.imageDataCache?.set($0, for: url)
+            self?.articleImage = $0.flatMap(UIImage.init)
+            self?.setArticleImage(animated: true)
+          }.store(in: &cancellables)
       }
-    authorImageCancellable = (article?.author.avatar.imageUrl).map(session.dataTaskPublisher)?.map(\.data)
-      .receive(on: DispatchQueue.main)
-      .map(UIImage.init).replaceError(with: nil).sink { [weak self] in
-        self?.authorImage = $0
+    }
+    if let url = article?.author.avatar.imageUrl {
+      if let data = imageDataCache?.data(for: url) {
+        authorImage = UIImage(data: data)
+      } else {
+        session.dataTaskPublisher(for: url)
+          .map(\.data).map(Optional.some)
+          .receive(on: DispatchQueue.main)
+          .replaceError(with: nil).sink { [weak self] in
+            self?.imageDataCache?.set($0, for: url)
+            self?.authorImage = $0.flatMap(UIImage.init)
+          }.store(in: &cancellables)
       }
+    }
   }
   
   private func setArticleImage(animated: Bool = false) {
-    articleImageView.map { [articleImage] imageView in
-      UIView.transition(with: imageView, duration: animated ? 0.2 : 0, options: .transitionCrossDissolve)
-        { imageView.image = articleImage } }
+    if animated {
+      articleImageView.map { [articleImage] imageView in
+        UIView.transition(with: imageView, duration: 0.2, options: .transitionCrossDissolve)
+          { imageView.image = articleImage } }
+    } else { articleImageView?.image = articleImage }
   }
 }
