@@ -54,3 +54,5 @@ extension Article: Hashable {
     hasher.combine(id)
   }
 }
+
+extension Article: Identifiable {}

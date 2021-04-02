@@ -6,5 +6,10 @@
 //
 
 import UIKit
+import SwiftUI
 
-class MainViewController: UIViewController {}
+class MainViewController: UIViewController {
+  @IBAction func viewArticles(_ sender: UIButton) {
+    navigationController?.pushViewController(UIHostingController(rootView: ArticlesView(model: .init())), animated: true)
+  }
+}

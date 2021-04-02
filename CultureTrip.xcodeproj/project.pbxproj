@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B4808BD2617070600B3FEF9 /* ArticleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4808BC2617070600B3FEF9 /* ArticleRowView.swift */; };
+		5B4808C1261714C100B3FEF9 /* ArticlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4808C0261714C100B3FEF9 /* ArticlesView.swift */; };
 		5BF1DD4325498A5300B6182E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF1DD4225498A5300B6182E /* AppDelegate.swift */; };
 		5BF1DD4525498A5300B6182E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF1DD4425498A5300B6182E /* SceneDelegate.swift */; };
 		5BF1DD4725498A5300B6182E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF1DD4625498A5300B6182E /* MainViewController.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B4808BC2617070600B3FEF9 /* ArticleRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleRowView.swift; sourceTree = "<group>"; };
+		5B4808C0261714C100B3FEF9 /* ArticlesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesView.swift; sourceTree = "<group>"; };
 		5BF1DD3F25498A5300B6182E /* CultureTrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CultureTrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF1DD4225498A5300B6182E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BF1DD4425498A5300B6182E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +72,8 @@
 				5BF1DD4625498A5300B6182E /* MainViewController.swift */,
 				5BF1DD5825498BFA00B6182E /* ArticlesViewController.swift */,
 				5BF1DD642549AAE700B6182E /* ArticleCollectionViewCell.swift */,
+				5B4808C0261714C100B3FEF9 /* ArticlesView.swift */,
+				5B4808BC2617070600B3FEF9 /* ArticleRowView.swift */,
 				5BF1DD4825498A5300B6182E /* Main.storyboard */,
 				5BF1DD4B25498A5900B6182E /* Assets.xcassets */,
 				5BF1DD4D25498A5900B6182E /* LaunchScreen.storyboard */,
@@ -147,11 +153,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BF1DD4725498A5300B6182E /* MainViewController.swift in Sources */,
+				5B4808BD2617070600B3FEF9 /* ArticleRowView.swift in Sources */,
 				5BF1DD5925498BFA00B6182E /* ArticlesViewController.swift in Sources */,
 				5BF1DD4325498A5300B6182E /* AppDelegate.swift in Sources */,
 				5BF1DD652549AAE700B6182E /* ArticleCollectionViewCell.swift in Sources */,
 				5BF1DD4525498A5300B6182E /* SceneDelegate.swift in Sources */,
 				5BF1DD5F25498DC700B6182E /* Article.swift in Sources */,
+				5B4808C1261714C100B3FEF9 /* ArticlesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,7 +309,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LWC7S9F6VV;
 				INFOPLIST_FILE = CultureTrip/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -321,7 +329,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LWC7S9F6VV;
 				INFOPLIST_FILE = CultureTrip/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

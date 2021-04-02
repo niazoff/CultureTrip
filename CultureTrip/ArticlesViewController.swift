@@ -84,7 +84,7 @@ protocol ImageDataCache: AnyObject {
   func set(_ data: Data?, for url: URL)
 }
 
-private final class DictionaryImageDataCache: ImageDataCache {
+final class DictionaryImageDataCache: ImageDataCache {
   private var cache = [URL: Data]()
   
   func data(for url: URL) -> Data? { cache[url] }
