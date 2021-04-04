@@ -95,7 +95,7 @@ struct ArticleRowView: View {
           }
         }
       }.padding(18)
-    }.background(Color.white)
+    }.background(Color(UIColor.systemBackground))
   }
 }
 
